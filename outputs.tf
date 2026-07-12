@@ -1,3 +1,7 @@
+output "network_profiles_id" {
+  description = "Map of id values across all network_profiles, keyed the same as var.network_profiles"
+  value       = { for k, v in azurerm_network_profile.network_profiles : k => v.id }
+}
 output "network_profiles_container_network_interface" {
   description = "Map of container_network_interface values across all network_profiles, keyed the same as var.network_profiles"
   value       = { for k, v in azurerm_network_profile.network_profiles : k => v.container_network_interface }
