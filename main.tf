@@ -7,9 +7,12 @@ resource "azurerm_network_profile" "network_profiles" {
   tags                = each.value.tags
 
   container_network_interface {
-    ip_configuration {
-      name      = each.value.container_network_interface.ip_configuration.name
-      subnet_id = each.value.container_network_interface.ip_configuration.subnet_id
+    dynamic "ip_configuration" {
+      for_each = each.value.container_network_interface.ip_configuration
+      content {
+        name      = ip_configuration.value.name
+        subnet_id = ip_configuration.value.subnet_id
+      }
     }
     name = each.value.container_network_interface.name
   }
