@@ -27,6 +27,14 @@ EOT
       name = string
     })
   }))
+  validation {
+    condition = alltrue([
+      for k, v in var.network_profiles : (
+        length(v.container_network_interface.ip_configuration) >= 1
+      )
+    ])
+    error_message = "Each ip_configuration list must contain at least 1 items"
+  }
   # --- Unconfirmed validation candidates, derived from azurerm_network_profile's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
