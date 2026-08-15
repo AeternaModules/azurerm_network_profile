@@ -4,7 +4,7 @@ output "network_profiles_id" {
 }
 output "network_profiles_container_network_interface" {
   description = "Map of container_network_interface values across all network_profiles, keyed the same as var.network_profiles"
-  value       = { for k, v in azurerm_network_profile.network_profiles : k => v.container_network_interface if v.container_network_interface != null && length(v.container_network_interface) > 0 }
+  value       = { for k, v in azurerm_network_profile.network_profiles : k => one(v.container_network_interface) if v.container_network_interface != null && length(v.container_network_interface) > 0 }
 }
 output "network_profiles_container_network_interface_ids" {
   description = "Map of container_network_interface_ids values across all network_profiles, keyed the same as var.network_profiles"
